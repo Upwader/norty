@@ -1,13 +1,13 @@
-<center>
-![Norty demo gif](norton/demo.gif)
-
-# Norty
-</center>
+<h1 align="center">
+  <img src="norton/demo.gif"><br>
+  Norty
+</h1>
 
 I've been aware of this gif's existance for a couple of years:
+
 ![Mysterious symantec norton gif](norton/norton2.gif)
 
-I pulled it out of an 88x31 collection and put it on my beloved proprietary ![MySpace](https://myspace.f46n.org/), at the bottom of every page, where if you're lucky it might show up.
+I pulled it out of an 88x31 collection and put it on my beloved proprietary [MySpace](https://myspace.f46n.org/), at the bottom of every page, where if you're lucky it might show up.
 
 But I've wondered: what is it? Well, obviously, it's a view counter. Showing the current month, the year, and the amount of people who've visited that month. I haven't really looked into it though. It might have been on Symantec's website in the mid to late 90s. If you do find another instance of it, perhaps with differences, [email me](mailto:andrew@upwader.com)!
 
@@ -25,7 +25,8 @@ Drop it anywhere, make sure your web server is able to read and write to norton/
 
 This won't work if you don't have the PHP ImageMagick extension installed, which usually doesn't come by default on installations of PHP.
 
-[Here's a guide made by a dude here on GitHub on how to do that](https://mlocati.github.io/articles/php-windows-imagick.html).
+[Here's a guide made by a dude here on GitHub on how to do that in Windows](https://mlocati.github.io/articles/php-windows-imagick.html).
+If you're on Linux, figure it out. You're using Linux. You can do this.
 
 ---
 
