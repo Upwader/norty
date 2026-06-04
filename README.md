@@ -21,9 +21,11 @@ I also would have done absolutely nothing with it if I didn't release it, so her
 
 ## Setup
 
-Drop it anywhere, make sure your web server is able to read and write to norton/views.json otherwise it won't work.
+Drop the main script norton.php and nortyConstants.php anywhere, and put the folder "norton" into a place that can't be accessed. Then, edit nortyConstants.php's "cwd" variable to be the location of the "norton" folder, e.g. "/var/www/upwader/norty/norton". You can rename the norton folder to anything as long as you change the "cwd" variable in nortyConstants.php
 
-This won't work if you don't have the PHP ImageMagick extension installed, which usually doesn't come by default on installations of PHP.
+Make sure Norty is able to read and write to the "norton" folder, otherwise it'll crash trying to read or write the view count.
+
+Norty won't work if you don't have the PHP ImageMagick extension installed, which usually doesn't come by default on installations of PHP.
 
 [Here's a guide made by a dude here on GitHub on how to do that in Windows](https://mlocati.github.io/articles/php-windows-imagick.html).
 If you're on Linux, figure it out. You're using Linux. You can do this.
