@@ -1,10 +1,10 @@
 <?php
 	class Views {
-		public function getViews($name): int {
+		public function getViews(string $name): int {
 			return 0;
 		}
 
-		public function inc($name): void {
+		public function inc(string $name): void {
 
 		}
 	}

@@ -1,5 +1,6 @@
 <?php
-	require("nortyConstants.php");
+	require("nortyConfig.php");
+	require(cwd."/nortyConstants.php");
 	require(cwd."/views.php");
 
 	$ref = $_GET["id"] ?? "";
@@ -7,33 +8,51 @@
 	$views->inc($url);
 	$count = $views->getViews($url);
 
-	$template = new Imagick(cwd."/template.gif");
+	$chosenTemplate = $_GET["tmp"] ?? defaultTemplate;
+	if(!in_array($chosenTemplate, availableTemplates)) {
+		$chosenTemplate = defaultTemplate;
+	}
+	$templateInfo = templateInformation[$chosenTemplate];
+
+	$template = new Imagick(cwd."/$chosenTemplate.gif");
 	$font = new Imagick(cwd."/font.png");
 	$final = new Imagick();
 	$text = new Imagick();
 
 
 	// calculate width of image that holds text by adding up all the used characters together using fontData
-	$textContent = currentMonth . "/" . currentYearShort . " " . $count;
+	$textContent = $templateInfo["prefix"] . currentMonth . "/" . currentYearShort . " " . $count;
 	$textplode = str_split($textContent);
 	$totalTextWidth = 0;
+	$totalTextHeight = fontHeight;
 	foreach($textplode as $char) {
-		$totalTextWidth += fontData[$char][1] + 1;
+		$fd = fontData[$char];
+
+		// If the text contains characters like g or p we need some extra space at the bottom which we wouldn't need otherwise.
+		// Calculate height of total text.
+		$offset = $fd[FONT_CHAR_OFFSET] ?? 0;
+		if($totalTextHeight + $offset != $totalTextHeight) {
+			$totalTextHeight += $offset;
+		}
+
+		$totalTextWidth += $fd[FONT_CHAR_WIDTH] + 1;
 	}
 
 	// make new image in $text with the width we've just calculated
-	$text->newImage($totalTextWidth, 6, new ImagickPixel("transparent"));
+	$text->newImage($totalTextWidth, $totalTextHeight, new ImagickPixel("transparent"));
 	$text->setImageFormat("gif");
 
 	// place each character into $text
 	$textImageWidth = 0;
 	foreach($textplode as $char) {
 		$charData = fontData[$char];
-		$width = $charData[1];
-		$x = $charData[0];
+		$offset = $charData[FONT_CHAR_OFFSET] ?? 0;
+		$width = $charData[FONT_CHAR_WIDTH];
+		$height = fontHeight + $offset;
+		$x = $charData[FONT_CHAR_XPOS];
 
 		// get chunk of $font that aligns with whatever character we're looping through and smash it into $text
-		$region = $font->getImageRegion($width, 6, $x, 0);
+		$region = $font->getImageRegion($width, $height, $x, 0);
 		$text->compositeImage($region, Imagick::COMPOSITE_OVER, $textImageWidth, 0);
 
 		// +1 to put a pixel of kerning between characters otherwise it looks ugly
@@ -47,7 +66,7 @@
 
 	// calculate horizontal and vertical position of text on frame
 	$posX = ($coalesced->getImageWidth() / 2) - ($text->getImageWidth() / 2);
-	$posY = $coalesced->getImageHeight() - $text->getImageHeight();
+	$posY = $coalesced->getImageHeight() - $text->getImageHeight() - $templateInfo["textBottomOffset"];
 
 	foreach($coalesced as $_frame) {
 		// if you don't do this to copy the frame into a new Imagick object it won't copy the font text on top of the image

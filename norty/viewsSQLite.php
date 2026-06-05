@@ -1,4 +1,7 @@
 <?php
+	
+	// Didn't comment over most of this code because I feel like it's really really simple
+
 	class ViewsSQLite extends Views {
 		private $db;
 
@@ -17,7 +20,7 @@
 				)");
 		}
 
-		public function getViews($name): int {
+		public function getViews(string $name): int {
 			$statement = $this->db->prepare("SELECT * FROM websites WHERE code = :code AND `month` = :month AND `year` = :year");
 			$statement->bindValue("code", $name);
 			$statement->bindValue("month", currentMonth);
@@ -25,6 +28,7 @@
 
 			$result = $statement->execute()->fetchArray();
 
+			// fetchArray returns false if no rows
 			if($result === false) {
 				return 0;
 			}
@@ -32,16 +36,17 @@
 			return $result["count"];
 		}
 
-		private function exists($name) {
+		private function exists(string $name): bool {
 			$statement = $this->db->prepare("SELECT * FROM websites WHERE code = :code AND `month` = :month AND `year` = :year");
 			$statement->bindValue("code", $name);
 			$statement->bindValue("month", currentMonth);
 			$statement->bindValue("year", currentYear);
 
+			// fetchArray returns false if no rows and an array if there are rows so we can just return is_array 
 			return is_array($statement->execute()->fetchArray());
 		}
 
-		private function create($name, $views = 0) {
+		private function create(string $name, int $views = 0): void {
 			$statement = $this->db->prepare("INSERT INTO websites (code, referrer, count, `month`, `year`) VALUES (:code, :referrer, :views, :month, :year)");
 			$statement->bindValue("code", $name);
 			$statement->bindValue("referrer", $_SERVER["HTTP_REFERER"] ?? null);
@@ -52,7 +57,7 @@
 			$statement->execute();
 		}
 
-		public function inc($name): void {
+		public function inc(string $name): void {
 			if(!$this->exists($name)) {
 				$this->create($name, 1);
 				return;
