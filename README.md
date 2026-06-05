@@ -1,11 +1,11 @@
 <h1 align="center">
-  <img src="norton/demo.gif"><br>
+  <img src="norty/demo.gif"><br>
   Norty
 </h1>
 
 I've been aware of this gif's existance for a couple of years:
 
-![Mysterious symantec norton gif](norton/norton2.gif)
+![Mysterious symantec norton gif](norty/norton2.gif)
 
 I pulled it out of an 88x31 collection and put it on my beloved proprietary [MySpace](https://myspace.f46n.org/), at the bottom of every page, where if you're lucky it might show up.
 
