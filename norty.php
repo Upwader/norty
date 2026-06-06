@@ -2,97 +2,60 @@
 	require("nortyConfig.php");
 	require(cwd."/nortyConstants.php");
 	require(cwd."/views.php");
+	require(cwd."/generator.php");
 
+	$error = null;
+	// check if there's a referer code
 	$ref = $_GET["id"] ?? "";
-	$url = allowReferer ? $ref : "";
-	$views->inc($url);
-	$count = $views->getViews($url);
+	$url = allowReferrer ? $ref : "";
 
-	$chosenTemplate = $_GET["tmp"] ?? defaultTemplate;
-	if(!in_array($chosenTemplate, availableTemplates)) {
+	$chosenTemplate = "";
+	if(forceDefaultTemplate) {
 		$chosenTemplate = defaultTemplate;
+	} else {
+		$chosenTemplate = $_GET["tmp"] ?? defaultTemplate;
+		if(!in_array($chosenTemplate, availableTemplates)) {
+			$error = "invalid template";
+			$chosenTemplate = defaultTemplate;
+		}
 	}
 	$templateInfo = templateInformation[$chosenTemplate];
 
-	$template = new Imagick(cwd."/$chosenTemplate.gif");
-	$font = new Imagick(cwd."/font.png");
-	$final = new Imagick();
-	$text = new Imagick();
-
-
-	// calculate width of image that holds text by adding up all the used characters together using fontData
-	$textContent = $templateInfo["prefix"] . currentMonth . "/" . currentYearShort . " " . $count;
-	$textplode = str_split($textContent);
-	$totalTextWidth = 0;
-	$totalTextHeight = fontHeight;
-	foreach($textplode as $char) {
-		$fd = fontData[$char];
-
-		// If the text contains characters like g or p we need some extra space at the bottom which we wouldn't need otherwise.
-		// Calculate height of total text.
-		$offset = $fd[FONT_CHAR_OFFSET] ?? 0;
-		if($totalTextHeight + $offset != $totalTextHeight) {
-			$totalTextHeight += $offset;
-		}
-
-		$totalTextWidth += $fd[FONT_CHAR_WIDTH] + 1;
+	// if the allowed domains list is not empty and the current referrer isn't in it, die
+	// $_SERVER["HTTP_REFERER"] ?? "" is in there because Referer is sent by the user and might not be there.
+	$referrerURL = @parse_url($_SERVER["HTTP_REFERER"] ?? "");
+	if(!empty(allowedDomains) && !in_array($referrerURL["host"] ?? null, allowedDomains)) {
+		$error = "domain not allowed";
 	}
 
-	// make new image in $text with the width we've just calculated
-	$text->newImage($totalTextWidth, $totalTextHeight, new ImagickPixel("transparent"));
-	$text->setImageFormat("gif");
-
-	// place each character into $text
-	$textImageWidth = 0;
-	foreach($textplode as $char) {
-		$charData = fontData[$char];
-		$offset = $charData[FONT_CHAR_OFFSET] ?? 0;
-		$width = $charData[FONT_CHAR_WIDTH];
-		$height = fontHeight + $offset;
-		$x = $charData[FONT_CHAR_XPOS];
-
-		// get chunk of $font that aligns with whatever character we're looping through and smash it into $text
-		$region = $font->getImageRegion($width, $height, $x, 0);
-		$text->compositeImage($region, Imagick::COMPOSITE_OVER, $textImageWidth, 0);
-
-		// +1 to put a pixel of kerning between characters otherwise it looks ugly
-		$textImageWidth += $width + 1;
-		$region->clear();
+	// If referrer is on, required, and is empty or unset, show an error.
+	if(allowReferrer && requireReferrer && empty($ref)) {
+		$error = "referrer required";
 	}
 
-
-	// get array of frames on gif
-	$coalesced = $template->coalesceImages();
-
-	// calculate horizontal and vertical position of text on frame
-	$posX = ($coalesced->getImageWidth() / 2) - ($text->getImageWidth() / 2);
-	$posY = $coalesced->getImageHeight() - $text->getImageHeight() - $templateInfo["textBottomOffset"];
-
-	foreach($coalesced as $_frame) {
-		// if you don't do this to copy the frame into a new Imagick object it won't copy the font text on top of the image
-		$delay = $_frame->getImageDelay();
-		$frame = new Imagick();
-		$frame->readImageBlob($_frame->getImageBlob());
-
-		// slap text on top of gif frame
-		$frame->compositeImage($text, Imagick::COMPOSITE_OVER, $posX, $posY);
-		$frame->setImageDelay($delay);
-
-		// add frame to $final gif sequence
-		$final->addImage($frame);
-		$frame->clear();
+	$generator = new NortyGenerator();
+	if($error === null) {
+		// Increment views, and then get the view count
+		$views->inc($url);
+		$count = $views->getViews($url);
+		
+		$final = $generator->generate([
+			"template" => $chosenTemplate,
+			"views" => $count,
+			"year" => currentYearShort,
+			"month" => currentMonth,
+		]);
+	} else {
+		$final = $generator->generate([
+			"template" => $chosenTemplate,
+			"text" => $error,
+			"color" => "#ff0000"
+		]);
 	}
-
-
 
 	header("x-powered-by: norty <https://github.com/upwader/norty>", false);
 	header("content-type: image/gif");
 	$final->setImageFormat("gif");
 	// if you don't do this deconstructImages thing imagick freaks out i dont really know why
 	echo $final->deconstructImages()->getImagesBlob();
-
-	// i think this might be useless considering im closing the script but im gonna leave it here anyway
-	$text->clear();
-	$template->clear();
-	$coalesced->clear();
 	$final->clear();

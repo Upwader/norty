@@ -6,7 +6,12 @@
 		private $db;
 
 		public function __construct() {
-			$this->db = new SQLite3(cwd."/norty.db");
+			if(file_exists(cwd."/norty.db")) {
+				// 05/06/2026: move files into subfolders
+				rename(cwd."/norty.db", cwd."/database/norty.db");
+			}
+
+			$this->db = new SQLite3(cwd."/database/norty.db");
 			$this->db->exec("
 				CREATE TABLE IF NOT EXISTS `websites` (
 					`id` INTEGER PRIMARY KEY AUTOINCREMENT,

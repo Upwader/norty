@@ -9,10 +9,14 @@
 			// I fucked up and last commit I accidentally had commit() write to norty.json but this function read from views.json
 			// For the literal ghosts who still have views.json I'm doing them a favor and renaming views.json to norty.json
 			if(file_exists(cwd."/views.json")) {
-				rename(cwd."/views.json", cwd."/norty.json");
+				rename(cwd."/views.json", cwd."/database/norty.json");
+			}
+			if(file_exists(cwd."/norty.json")) {
+				// 05/06/2026: move files into subfolders
+				rename(cwd."/norty.json", cwd."/database/norty.json");
 			}
 
-			$file = @file_get_contents(cwd."/norty.json");
+			$file = @file_get_contents(cwd."/database/norty.json");
 
 			if($file !== false) {
 				$this->views = json_decode($file, true);

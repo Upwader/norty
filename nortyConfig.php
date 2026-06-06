@@ -27,17 +27,37 @@
 	const viewsMode = "SQLite";
 
 	/*
-		Allow more than 1 person to embed this instance of Norty into their website if set to true
+		Allow more than 1 person to embed this instance of Norty into their website if set to true by allowing them to identify their website through a ?ref parameter
 		Otherwise it'll just count this one website's views
 	*/
-	const allowReferer = false;
+	const allowReferrer = false;
 
 	/*
-		Default template to use.
+		Require referrer ?ref parameter to be set, otherwise, show an error.	
+	*/
+	const requireReferrer = false;
+
+	/*
+		If this array isn't empty, it will require that whatever place Norty is being embedded from is from a specific domain.
+	*/
+	const allowedDomains = [
+		// "andrew.upwader.com",
+		// "myspace.f46n.org",
+	];
+
+	/*
+		Default template to use. Can be overriden with query parameter ?tmp, unless forceDefaultTemplate is set to true.
 		Available:
 			1. 88x31
 			2. large
 			3. largeMac
-		Check them in the assets folder
+			4. largeProtectYourself
+			5. largeMacProtectYourself
+		Check them in the cwd/templates folder
 	*/
 	const defaultTemplate = "88x31";
+
+	/*
+		Force default template to be used.
+	*/
+	const forceDefaultTemplate = false;

@@ -33,7 +33,7 @@
 		"ñ" => [119, 4],
 		"o" => [124, 4],
 		"p" => [129, 3, 2],
-		"q" => [134, 3, 2],
+		"q" => [135, 3, 2],
 		"r" => [139, 3],
 		"s" => [143, 4],
 		"t" => [148, 3],
@@ -70,7 +70,6 @@
 	// I'm using a different variable for this since the original gif used a 2 digit year and not a 4 digit year like currentYear is.
 	define("currentYearShort", intval(date("y")));
 
-
 	// GIF templates to choose from!
 	define("availableTemplates", [
 		"88x31",
@@ -80,27 +79,33 @@
 		"largeMacProtectYourself",
 	]);
 
-	// Right now this only has information on whether the text should be offset from the bottom of the image.
-	// Might change "Updated: " to something else later on.
+	/*
+		"textBottomOffset" is how many pixels off the bottom of the image will the text be away from.
+		"text" is a template string of what the gif text will say.
+
+		If you add a new template, add it to availableTemplates and add the information here.
+
+		Might change "Updated: " to something else later on.
+	*/
 	define("templateInformation", [
 		"88x31" => [
 			"textBottomOffset" => 0,
-			"prefix" => "",
+			"text" => "%month%/%year% %views%",
 		],
 		"large" => [
 			"textBottomOffset" => 3,
-			"prefix" => "Updated: ",
+			"text" => "Updated: %month%/%year% %views%",
 		],
 		"largeMac" => [
 			"textBottomOffset" => 3,
-			"prefix" => "Updated: ",
+			"text" => "Updated: %month%/%year% %views%",
 		],
 		"largeProtectYourself" => [
 			"textBottomOffset" => 3,
-			"prefix" => "Updated: ",
+			"text" => "Updated: %month%/%year% %views%",
 		],
 		"largeMacProtectYourself" => [
 			"textBottomOffset" => 3,
-			"prefix" => "Updated: ",
+			"text" => "Updated: %month%/%year% %views%",
 		],
 	]);

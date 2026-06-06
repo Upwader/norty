@@ -1,11 +1,14 @@
 <h1 align="center">
-  <img src="norty/demo.gif"><br>
+  <img src="norty/git-readme-assets/demo2.gif">
+  <img src="norty/git-readme-assets/demo.gif">
+  <img src="norty/git-readme-assets/demo3.gif">
+  <br>
   Norty
 </h1>
 
 I've been aware of this gif's existance for a couple of years:
 
-![Mysterious symantec norton gif](norty/norton2.gif)
+![Mysterious norton antivirus gif](norty/git-readme-assets/norton2.gif)
 
 I pulled it out of an 88x31 collection and put it on my beloved proprietary [MySpace](https://myspace.f46n.org/), at the bottom of every page, where if you're lucky it might show up.
 
@@ -37,8 +40,18 @@ Just put it in an HTML img tag.
 
 If you set the config value "allowReferer" to true, you can set query parameter "id" to identify your website.
 So, if you embed "norty.php?id=helloooo" in any website, it'll keep the count no matter what website you're in.
+If you set the config value to false, it'll just count up for all websites that embed it.
 
-If you set it to false, it'll just count up for all websites that embed it.
+If you set the query parameter "tmp" you can choose between 5 different templates:
+1. [88x31](norty/88x31.gif)
+2. [large](norty/large.gif)
+3. [largeMac](norty/largeMac.gif)
+4. [largeProtectYourself](norty/largeProtectYourself.gif)
+5. [largeMacProtectYourself](norty/largeMacProtectYourself.gif)
+
+For example, "norty.php?id=hello&tmp=largeMac" will show views for the website that identifies as "hello" using the largeMac template.
+
+Remember that query parameters work like this: First one uses a question mark, the rest an ampersand. So if you only have one query parameter, don't use an ampersand. If you have more than 1, use ampersands after the first one. For example: "norty.php?id=hello&tmp=large&query=three&anotherquery=four"
 
 ## Setup
 
@@ -46,7 +59,7 @@ Drop the main script [norty.php](norty.php) and [nortyConfig.php](nortyConfig.ph
 Then, edit [nortyConfig.php](nortyConfig.php)'s "cwd" variable to be the location of the "[norty](norty)" folder, e.g. "/var/www/upwader/norty-assets". (without the slash at the end!)
 You can rename the "[norty](norty)" folder to anything as long as you change the "cwd" variable in [nortyConfig.php](nortyConfig.php)
 
-Make sure Norty is able to read and write to the "[norty](norty)" folder, otherwise it'll crash trying to read or write the view count.
+Make sure Norty is able to read and write to the "[norty/databases](norty/databases)" folder, otherwise it'll crash trying to read or write the view count.
 
 Norty won't work if you don't have the PHP ImageMagick extension installed, which usually doesn't come by default on installations of PHP.
 
@@ -58,5 +71,7 @@ SQLite3 is also not installed by default on PHP, although on Windows it IS insta
 After that, it SHOULD just work. If it doesn't, open an issue or [email me](mailto:andrew@upwader.com).
 
 ---
+
+This project isn't AI slop but rather human slop.
 
 Enjoy!
