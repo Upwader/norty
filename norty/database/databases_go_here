@@ -1,0 +1,3 @@
+This is an empty file that's only here because otherwise Git won't add the database folder to the repository.
+
+Also, if we ever implement a database that doesn't rely on local files, like MongoDB or an actual SQL server, you won't find anything in this folder.
