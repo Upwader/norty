@@ -43,11 +43,11 @@ So, if you embed "norty.php?id=helloooo" in any website, it'll keep the count no
 If you set the config value to false, it'll just count up for all websites that embed it.
 
 If you set the query parameter "tmp" you can choose between 5 different templates:
-1. [88x31](norty/88x31.gif)
-2. [large](norty/large.gif)
-3. [largeMac](norty/largeMac.gif)
-4. [largeProtectYourself](norty/largeProtectYourself.gif)
-5. [largeMacProtectYourself](norty/largeMacProtectYourself.gif)
+1. [88x31](norty/templates/88x31.gif)
+2. [large](norty/templates/large.gif)
+3. [largeMac](norty/templates/largeMac.gif)
+4. [largeProtectYourself](norty/templates/largeProtectYourself.gif)
+5. [largeMacProtectYourself](norty/templates/largeMacProtectYourself.gif)
 
 For example, "norty.php?id=hello&tmp=largeMac" will show views for the website that identifies as "hello" using the largeMac template.
 

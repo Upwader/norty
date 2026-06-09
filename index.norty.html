@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Norty</title>
+	<style>
+		body {
+			width: 100dvw;
+			font-family: Arial,sans-serif;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			margin: 0;
+		}
+		h1 {
+			margin: 0;
+		}
+		h1, .imgs {
+			text-align: center;
+		}
+		div {
+			margin: 10px;
+			width: 100%;
+			max-width: 500px;
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<div class="imgs">
+			<img src="https://raw.githubusercontent.com/Upwader/norty/master/norty/git-readme-assets/demo2.gif">
+			<img src="https://raw.githubusercontent.com/Upwader/norty/master/norty/git-readme-assets/demo.gif">
+			<img src="https://raw.githubusercontent.com/Upwader/norty/master/norty/git-readme-assets/demo3.gif">
+		</div>
+		<h1>This website uses Norty</h1>
+		<hr>
+		Norty is a website view counter modeled after
+		<a href="https://raw.githubusercontent.com/Upwader/norty/master/norty/git-readme-assets/norton2.gif">this gif</a>
+		made for a <a href="https://web.archive.org/web/19970408153010/http://www.symantec.com/pys/index.html">Norton Antivirus product made in the late 1990s that let you show off your antivirus to anyone who went on your website</a>, for some reason.<br>
+		<hr>
+		You can embed Norty into your pages by simply putting "norty.php" on an &lt;img&gt; element. If this instance of Norty allows it, you can identify your website by adding ?id=(word of your choice) to the end of the norty link in your image element. For example:
+		&lt;img src="https://example.com/norty.php?id=mywebsite"&gt; will identify "mywebsite" and count views individually for that website.
+		<hr>
+		There's also a few different GIF templates you can choose from, here's a list:
+		<ol>
+			<li>
+				<a href="https://raw.githubusercontent.com/Upwader/norty/master/norty/templates/88x31.gif">88x31</a>
+			</li>
+			<li>
+				<a href="https://raw.githubusercontent.com/Upwader/norty/master/norty/templates/large.gif">large</a>
+			</li>
+			<li>
+				<a href="https://raw.githubusercontent.com/Upwader/norty/master/norty/templates/largeMac.gif">largeMac</a>
+			</li>
+			<li>
+				<a href="https://raw.githubusercontent.com/Upwader/norty/master/norty/templates/largeProtectYourself.gif">largeProtectYourself</a>
+			</li>
+			<li>
+				<a href="https://raw.githubusercontent.com/Upwader/norty/master/norty/templates/largeMacProtectYourself.gif">largeMacProtectYourself</a>
+			</li>
+		</ol>
+		You can use these by putting ?tmp=[name] at the end of your link. Remember that if you're using more than 1 query parameter you have to use & after the first one, for example: "https://example.com/norty.php?tmp=large&id=mywebsite" will show the template large and identify your website as "mywebsite".
+		<hr>
+		That's about what you need to know.
+		If you wanna learn more or check the source code, go to the source code repository in GitHub <a href="https://github.com/upwader/norty">here</a>.
+		<hr>
+		<div class="imgs">
+			<img src="norty.php?tmp=largeProtectYourself&id=nortyindex">
+		</div>
+	</div>
+</body>
+</html>

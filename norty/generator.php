@@ -10,12 +10,14 @@ class NortyGenerator {
 		foreach(str_split($textContent) as $char) {
 			$fd = fontData[$char];
 
+			/*
 			// If the text contains characters like g or p we need some extra space at the bottom which we wouldn't need otherwise.
 			// Calculate height of total text.
 			$offset = $fd[FONT_CHAR_OFFSET] ?? 0;
 			if($totalTextHeight + $offset != $totalTextHeight) {
 				$totalTextHeight += $offset;
 			}
+			*/
 
 			$totalTextWidth += $fd[FONT_CHAR_WIDTH] + 1;
 		}
